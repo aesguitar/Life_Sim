@@ -1,6 +1,5 @@
 package life;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -19,6 +18,7 @@ public class Person {
 	private boolean dead;
 	private double[] deathChances;
 	private Occupation currOcc;
+	private StatsList sl;
 	private OccupationList ol;
 	
 	private boolean newEvent = false;
@@ -27,7 +27,7 @@ public class Person {
 	public Person(String name)
 	{
 		try {
-			ol = new OccupationList(new File("occupations.xml"));
+			ol = new OccupationList(utils.constants.OCCUPATIONS);
 		} catch (DocumentException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -55,11 +55,17 @@ public class Person {
 		}
 		
 		currOcc = ol.getByNameTitle("none", "none");
+		try {
+			sl = new StatsList(utils.constants.STAT_NAMES);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void setChanceValues() throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		Scanner in = new Scanner(new File("deathChances"));
+		Scanner in = new Scanner(utils.constants.DEATH_CHANCES);
 		for(int i = 0; i < deathChances.length; i++)
 		{
 			deathChances[i] = in.nextDouble();

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class TestUIMain extends Application {
 
 	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("TestUI.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource(utils.constants.MAIN_UI.getName()));
 		Scene scene = new Scene(root);
 		scene.setRoot(root);
 		
