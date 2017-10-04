@@ -7,10 +7,10 @@ public class Stat {
 
 	public Stat(String name, int id) {
 		setName(name);
-		value = Math.random()*100;
+		value = utils.Utils.normalRandom(0, 100, 50, 15);
 		this.setId(id);
 	}
-	
+
 	public Stat(String name, double value, int id)
 	{
 		setName(name);
@@ -46,5 +46,13 @@ public class Stat {
 	public void setId(int id2) {
 		this.id = id2;
 	}
-	
+
+	public String getFirstFourLetters()
+	{
+		if(name.length()>4)
+			return name.substring(0, 4);
+		else 
+			return name;
+	}
+
 }

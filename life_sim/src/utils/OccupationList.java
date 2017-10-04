@@ -15,9 +15,15 @@ public class OccupationList {
 
 	private ArrayList<Occupation> OccList = new ArrayList<Occupation>();
 
-	public OccupationList(File f) throws DocumentException {
+	public OccupationList(File f) {
 		SAXReader sr = new SAXReader();
-		Document d = sr.read(f);
+		Document d = null;
+		try {
+			d = sr.read(f);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Element r = d.getRootElement();
 		for(Iterator<Element> it = r.elementIterator(); it.hasNext();)
 		{
@@ -67,19 +73,14 @@ public class OccupationList {
 
 	public static void main(String[] args)
 	{
-		try {
-			OccupationList ol = new OccupationList(new File("occupations.xml"));
-			ArrayList<Occupation> a = ol.getArrayList();
-			for(Occupation o : a)
-			{
-				System.out.println(o.toString());
-			}
-			
-			System.out.println("\n"+ol.getByNameTitle("none", "none"));
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		OccupationList ol = new OccupationList(new File("occupations.xml"));
+		ArrayList<Occupation> a = ol.getArrayList();
+		for(Occupation o : a)
+		{
+			System.out.println(o.toString());
 		}
+		
+		System.out.println("\n"+ol.getByNameTitle("none", "none"));
 		
 		
 	}

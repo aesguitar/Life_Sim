@@ -1,15 +1,20 @@
 package test;
 
+import java.io.IOException;
+
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
+import javafx.stage.Stage;
 import life.Person;
 
 
@@ -21,11 +26,11 @@ public class TestUIController {
 	@SuppressWarnings("rawtypes")
 	private ObservableList console;
 
-	@FXML // fx:id="TestButton"
-	private Button testButton, newLife; // Value injected by FXMLLoader
+	@FXML
+	private Button testButton, newLife, statsButton; 
 
-	@FXML // fx:id="TextOutput"
-	private TextFlow textOutput; // Value injected by FXMLLoader
+	@FXML 
+	private TextFlow textOutput;
 
 	@FXML
 	private ScrollPane sPane1;
@@ -50,7 +55,7 @@ public class TestUIController {
 								addTextToConsole(String.format("You aged one year. You are %d year old.", p.getAge()));
 							else
 								addTextToConsole(String.format("You aged one year. You are %d years old.", p.getAge()));
-							
+
 							System.out.printf("new event: %b\n", p.isNewEvent());
 							if(p.isNewEvent())
 							{
@@ -62,11 +67,11 @@ public class TestUIController {
 								{
 									addTextToConsole(String.format("\t%s has started %s as a %s.", p.getName(), p.getCurrOcc().getName(), p.getCurrOcc().getTitle()));
 								}
-								
+
 								p.setNewEvent(false);
 								p.setEventType(p.NONE);
 							}
-							
+
 						}
 						else
 						{
@@ -81,7 +86,7 @@ public class TestUIController {
 				}
 			}
 		});
-		
+
 		newLife.addEventHandler(Event.ANY, new EventHandler()
 		{
 			public void handle(Event e)
@@ -92,6 +97,35 @@ public class TestUIController {
 					clearConsole();
 					addTextToConsole(String.format("You are born. Your name is %s.", p.getName()));
 					addTextToConsole(String.format("You are a %s.", p.getGender()));
+				}
+			}
+		});
+
+		statsButton.addEventHandler(Event.ANY, new EventHandler()
+		{
+			public void handle(Event e)
+			{
+				if(e.getEventType().equals(MouseEvent.MOUSE_CLICKED))
+				{
+					if(p != null)
+					{
+						Parent root;
+
+						try {
+							root = FXMLLoader.load(getClass().getResource(utils.constants.STATS_DISPLAY.getName()));
+							Stage stage = new Stage();
+							stage.setScene(new Scene(root));
+							stage.show();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+					}
+					else
+					{
+						addTextToConsole("Person not yet created.");
+					}
 				}
 			}
 		});

@@ -1,16 +1,24 @@
-package life;
+package utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import life.Stat;
+
 public class StatsList {
 
 	private ArrayList<Stat> sl = new ArrayList<Stat>();
 	
-	public StatsList(File stat_names) throws FileNotFoundException {
-		Scanner in = new Scanner(stat_names);
+	public StatsList(File stat_names){
+		Scanner in = null;
+		try {
+			in = new Scanner(stat_names);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int id = 0;
 		String name;
 		while(in.hasNextLine())
@@ -21,8 +29,6 @@ public class StatsList {
 		}
 		in.close();
 		setStat(0,100);
-		setStat(6, utils.Utils.normalRandom(0, 100, 50, 15));
-		setStat(1, utils.Utils.normalRandom(0, 100, 50, 15));
 		setStat(8, utils.Utils.expRandom(0, 100, 2.5, 100));
 	}
 	
@@ -58,17 +64,11 @@ public class StatsList {
 	
 	public static void main(String args[])
 	{
-		try {
-			StatsList s = new StatsList(utils.constants.STAT_NAMES);
-			
-			for(Stat i : s.getList())
-			{
-				System.out.println(i.toString());
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		StatsList s = new StatsList(utils.constants.STAT_NAMES);
+		
+		for(Stat i : s.getList())
+		{
+			System.out.println(i.toString());
 		}
 	}
 

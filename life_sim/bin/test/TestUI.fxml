@@ -13,8 +13,9 @@
         <items>
           <AnchorPane minHeight="200.0" minWidth="150.0" prefHeight="398.0" prefWidth="150.0">
                <children>
-                  <Button fx:id="testButton" layoutX="51.0" layoutY="187.0" mnemonicParsing="false" text="Age 1 Year" />
-                  <Button fx:id="newLife" layoutX="51.0" layoutY="155.0" mnemonicParsing="false" text="New Life" />
+                  <Button fx:id="testButton" layoutX="84.0" layoutY="359.0" mnemonicParsing="false" text="Age 1 Year" />
+                  <Button fx:id="newLife" layoutX="90.0" layoutY="14.0" mnemonicParsing="false" text="New Life" />
+                  <Button fx:id="statsButton" layoutX="84.0" layoutY="327.0" mnemonicParsing="false" text="Show Stats" />
                </children>
             </AnchorPane>
           <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="350.0">

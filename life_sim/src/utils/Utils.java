@@ -21,7 +21,7 @@ public class Utils {
 		double val;
 		do {
 			val =  scale * Math.log(1-rand.nextDouble())/(-lambda);
-			System.out.println(val);
+			//System.out.println(val);
 		}while(val < min || val > max);
 	    return val;
 	}

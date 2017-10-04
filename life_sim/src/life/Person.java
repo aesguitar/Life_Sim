@@ -3,9 +3,7 @@ package life;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import org.dom4j.DocumentException;
-
-import utils.OccupationList;
+import utils.StatsList;
 
 public class Person {
 
@@ -19,19 +17,12 @@ public class Person {
 	private double[] deathChances;
 	private Occupation currOcc;
 	private StatsList sl;
-	private OccupationList ol;
 	
 	private boolean newEvent = false;
 	private int eventType = 0;
 	
 	public Person(String name)
 	{
-		try {
-			ol = new OccupationList(utils.constants.OCCUPATIONS);
-		} catch (DocumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		
 		this.name = name;
 		age = 0;
@@ -54,13 +45,9 @@ public class Person {
 			e.printStackTrace();
 		}
 		
-		currOcc = ol.getByNameTitle("none", "none");
-		try {
-			sl = new StatsList(utils.constants.STAT_NAMES);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		currOcc =utils.constants.OCC_LIST.getByNameTitle("none", "none");
+		sl = new StatsList(utils.constants.STAT_NAMES);
+		utils.Statics.sl = sl;
 	}
 
 	private void setChanceValues() throws FileNotFoundException {
@@ -106,37 +93,37 @@ public class Person {
 		{
 			if(age == 4)
 			{
-				setCurrOcc(ol.getByNameTitle("Kindergarten", "Student"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("Kindergarten", "Student"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
 			else if(age == 6)
 			{
-				setCurrOcc(ol.getByNameTitle("Elementary School", "Student"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("Elementary School", "Student"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
 			else if(age == 11)
 			{
-				setCurrOcc(ol.getByNameTitle("Middle School", "Student"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("Middle School", "Student"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
 			else if(age == 14)
 			{
-				setCurrOcc(ol.getByNameTitle("High School", "Student"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("High School", "Student"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
 			else if(age == 18)
 			{
-				setCurrOcc(ol.getByNameTitle("College", "Student"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("College", "Student"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
-			else if((age < 4 || age > 22) && !currOcc.equals(ol.getByNameTitle("none", "none")))
+			else if((age < 4 || age > 22) && !currOcc.equals(utils.constants.OCC_LIST.getByNameTitle("none", "none")))
 			{
-				setCurrOcc(ol.getByNameTitle("none", "none"));
+				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("none", "none"));
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
