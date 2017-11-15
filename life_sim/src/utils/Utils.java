@@ -25,5 +25,13 @@ public class Utils {
 		}while(val < min || val > max);
 	    return val;
 	}
+	
+	public static String newLineSpacing(int num)
+	{
+		String str = "";
+		for(int i = 0; i < num; i++)
+			str = str.concat("\n");
+		return str;
+	}
 
 }

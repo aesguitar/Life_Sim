@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import life.Person;
+import utils.ConsoleQueue;
 
 
 
@@ -39,6 +40,7 @@ public class TestUIController {
 	public void initialize()
 	{
 		console = textOutput.getChildren();
+		ConsoleQueue cq = new ConsoleQueue();
 
 		testButton.addEventHandler(Event.ANY, new EventHandler()
 		{
@@ -51,37 +53,39 @@ public class TestUIController {
 						if(!p.getDead())
 						{
 							p.ageOneYear();
+							cq.add("You aged one year.");
 							if(p.getAge() == 1)
-								addTextToConsole(String.format("You aged one year. You are %d year old.", p.getAge()));
+								cq.add(String.format("You are %d year old.", p.getAge()));
 							else
-								addTextToConsole(String.format("You aged one year. You are %d years old.", p.getAge()));
+								cq.add(String.format("You are %d years old.", p.getAge()));
 
 							System.out.printf("new event: %b\n", p.isNewEvent());
 							if(p.isNewEvent())
 							{
 								if(p.getEventType() == p.DEATH)
 								{
-									addTextToConsole(String.format("\t%s has died at %d years old.", p.getName(), p.getAge()));
+									cq.add(String.format("\t%s has died at %d years old.", p.getName(), p.getAge()));
 								}
 								else if(p.getEventType() == p.OCCUPATION_CHANGE)
 								{
-									addTextToConsole(String.format("\t%s has started %s as a %s.", p.getName(), p.getCurrOcc().getName(), p.getCurrOcc().getTitle()));
+									cq.add(String.format("\t%s has started %s as a %s.", p.getName(), p.getCurrOcc().getName(), p.getCurrOcc().getTitle()));
 								}
 
 								p.setNewEvent(false);
 								p.setEventType(p.NONE);
 							}
-
 						}
 						else
 						{
-							addTextToConsole(String.format("%s is dead at %d years old.", p.getName(),p.getAge()));
+							cq.add(String.format("%s is dead at %d years old.", p.getName(),p.getAge()));
 						}
 					}
 					else
 					{
-						addTextToConsole("No person was created.");
+						cq.add("No person was created.");
 					}
+
+					printQueueToConsole(cq);
 
 				}
 			}
@@ -137,11 +141,44 @@ public class TestUIController {
 	//Adds the specified string to the console and add a new line character
 	public void addTextToConsole(String text)
 	{
+		if(console.size()>0)
+			console.remove(console.size()-1);
 		System.out.printf("Adding output to console. \"%s\"\n", text);
 		console.add(new Text(text.concat("\n")));
-		console.add(new Text(""));
+		console.add(new Text("\n\n\n"));
 		//console.remove(console.size()-1);
 		sPane1.setVvalue(1);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addTextToConsole(String text, int spacing)
+	{
+		if(console.size()>0)
+			console.remove(console.size()-1);
+		System.out.printf("Adding output to console. \"%s\"\n", text);
+		console.add(new Text(text.concat("\n")));
+		console.add(new Text(utils.Utils.newLineSpacing(spacing)));
+		console.add(new Text("\n\n\n"));
+		//console.remove(console.size()-1);
+		sPane1.setVvalue(1);
+	}
+
+	public void printQueueToConsole(ConsoleQueue cq)
+	{
+		//cq.printConsole();
+		int spacing = cq.getSize();
+		cq.reverseOrder();
+		//cq.printConsole();
+		if(!cq.isEmpty())
+		{
+			for(int i = spacing-1; i > 0; i--)
+			{
+				addTextToConsole(cq.getTop());
+				cq.removeTop();
+			}
+			addTextToConsole(cq.getTop(),spacing);
+			cq.removeTop();
+		}
 	}
 
 	@SuppressWarnings("unchecked")

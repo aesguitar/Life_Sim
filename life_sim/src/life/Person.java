@@ -121,7 +121,7 @@ public class Person {
 				newEvent = true;
 				setEventType(OCCUPATION_CHANGE);
 			}
-			else if((age < 4 || age > 22) && !currOcc.equals(utils.constants.OCC_LIST.getByNameTitle("none", "none")))
+			else if((age < 4 || age >= 22) && !currOcc.equals(utils.constants.OCC_LIST.getByNameTitle("none", "none")))
 			{
 				setCurrOcc(utils.constants.OCC_LIST.getByNameTitle("none", "none"));
 				newEvent = true;
